@@ -157,12 +157,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="">
                     <input type="submit" class="fadeIn fourth" value="Ingresar">
                 </div>
-                <p>¿No tienes una cuenta? <a href="register.php">Regístrate ahora</a>.</p>
+                <!-- <p>¿No tienes una cuenta? <a href="register.php">Regístrate ahora</a>.</p> -->
             </form>
 
             <!-- Remind Passowrd -->
             <div id="formFooter">
-                <a class="underlineHover" data-toggle="modal" data-target="#modalContacto" href="#">Contactar con el Administrador.</a>
+                <a class="underlineHover" data-toggle="modal" data-target="#modalContacto" href="#">¿No cuenta con credenciales?</a>
             </div>
 
         </div>
@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </button>
                 </div>
                 <div class="modal-body" style="font-size: 18px;">
-                    Estimado cliente, si no cuenta con sus credenciales favor de comunicarse al número 935-704-087 o al correo helpdesk@outlook.es.
+                    Estimado cliente, si no cuenta con sus credenciales favor de comunicarse con nuestro equipo ingresando al siguiente link <a href="https://web.whatsapp.com/" target="_blank">click aquí</a>.
                 </div>
                 <div class="modal-footer">
                     <button type="button" style="font-size: 15px;" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

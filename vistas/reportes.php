@@ -11,7 +11,7 @@ if (isset($_SESSION["username"]) && $_SESSION["id"] == 2) {
   <div class="container">
     <div class="card border-0 shadow my-5">
       <div class="card-body p-5">
-        <h1 class="fw-light">Gestión de Reportes de Usuario</h1>
+        <h1 class="fw-light">Reporte de Equipos Registrados</h1>
         <p class="lead">
         <div id="tablaReporteAdminLoad"></div>
         </p>

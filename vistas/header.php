@@ -56,7 +56,7 @@ $idUsuario = mysqli_fetch_array($respuesta)[0];
                     <?php if ($_SESSION["id"] == 1) {  ?>
                         <li class="nav-item">
                             <a class="nav-link" href="misDispositivos.php">
-                                <span class="fas fa-microchip"></span> Mis dispositivos</a>
+                                <span class="fas fa-microchip"></span> Mis Equipos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="misReportes.php">
@@ -72,7 +72,7 @@ $idUsuario = mysqli_fetch_array($respuesta)[0];
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="asignacion.php">
-                                <span class="fas fa-address-book"></span> Asignación</a>
+                                <span class="fas fa-address-book"></span> Registro Equipos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="reportes.php">

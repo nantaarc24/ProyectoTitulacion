@@ -14,7 +14,7 @@ if (isset($_SESSION["username"]) && $_SESSION["id"] == 1) {
         <h1 class="fw-light">Reportes de Cliente</h1>
         <p class="lead">
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrearReporte">
-            Crear Reporte
+            Reportar Falla
           </button>
           <hr>
 
