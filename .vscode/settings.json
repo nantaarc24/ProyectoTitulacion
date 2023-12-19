@@ -1,0 +1,12 @@
+{
+    "liveServer.settings.port": 5501,
+    "php.validate.executablePath": "C:\\xampp",
+    "phpserver.autoOpenOnReload": true,
+    "phpserver.browser": null,
+    "phpserver.ip": "localhost",
+    "phpserver.phpConfigPath": null,
+    "phpserver.phpPath": null,
+    "phpserver.port": 3000,
+    "phpserver.relativePath": ".",
+    "phpserver.router": null
+}
