@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <span class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</span>
+                    <span class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</span>
                     <button class="btn btn-primary">Agregar</button>
                 </div>
             </div>

@@ -27,10 +27,12 @@ concat(persona.paterno,
        persona.nombre) as nombrePersona,
   equipo.id_equipo as idEquipo,
   equipo.nombre as nombreEquipo,
+  concat(tecnico.apellidos,' ',tecnico.nombre) as nombreTecnico,
   reporte.descripcion_problema as problema,
   reporte.estatus as estatus,
   reporte.solucion_problema as solucion,
-  reporte.fecha as fecha
+  reporte.fecha as fecha,
+  asignacion.garantia as garantia
 FROM
 t_reportes as reporte
 INNER JOIN
@@ -39,6 +41,10 @@ INNER JOIN
 t_persona as persona ON usuario.id_persona = persona.id_persona
 INNER JOIN
 t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo
+INNER JOIN
+t_tecnico AS tecnico ON reporte.id_usuario_tecnico = tecnico.id
+INNER JOIN
+t_asignacion as asignacion ON reporte.id_equipo = asignacion.id_equipo
 AND reporte.id_usuario = '$idUsuario'";
 
 $respuesta = mysqli_query($link, $sql);
@@ -60,9 +66,11 @@ $respuesta = mysqli_query($link, $sql);
         <th>#</th>
         <th>Persona</th>
         <th>Dispositivo</th>
+        <th>Técnico</th>
+        <th>Garantía</th>
         <th>Fecha</th>
         <th>Descripción</th>
-        <th>Estatus</th>
+        <th>Estado</th>
         <th>Solución</th>
         <th>Eliminar</th>
     </thead>
@@ -73,6 +81,13 @@ $respuesta = mysqli_query($link, $sql);
                 <td><?php echo $contador++; ?></td>
                 <td><?php echo $mostrar['nombrePersona']; ?></td>
                 <td><?php echo $mostrar['nombreEquipo']; ?></td>
+                <td><?php echo $mostrar['nombreTecnico']; ?></td>
+                <td>
+                    <?php
+                    $garantia = $mostrar['garantia'];
+                    echo $garantia . ($garantia == 1 ? ' mes' : ' meses');
+                    ?>
+                </td>
                 <td><?php echo $mostrar['fecha']; ?></td>
                 <td><?php echo $mostrar['problema']; ?></td>
                 <td>
@@ -110,16 +125,17 @@ $respuesta = mysqli_query($link, $sql);
             // ]
 
             buttons: {
-                buttons: [{
-                        extend: 'copy',
-                        className: 'btn btn-outline-info',
-                        text: '<i class="far fa-copy"></i> Copiar'
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn btn-outline-primary',
-                        text: '<i class="fas fa-file-csv"></i> CSV'
-                    },
+                buttons: [
+                    // {
+                    //     extend: 'copy',
+                    //     className: 'btn btn-outline-info',
+                    //     text: '<i class="far fa-copy"></i> Copiar'
+                    // },
+                    // {
+                    //     extend: 'csv',
+                    //     className: 'btn btn-outline-primary',
+                    //     text: '<i class="fas fa-file-csv"></i> CSV'
+                    // },
                     {
                         extend: 'excel',
                         className: 'btn btn-outline-success',

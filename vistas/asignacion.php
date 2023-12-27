@@ -11,10 +11,10 @@ if (isset($_SESSION["username"]) && $_SESSION["id"] == 2) {
     <div class="container">
       <div class="card border-0 shadow my-5">
         <div class="card-body p-5">
-          <h1 class="fw-light">Registro de Equipos del Cliente</h1>
+          <h1 class="fw-light">Registro de Producto del Cliente</h1>
           <p class="lead">
             <button class="btn btn-primary" data-toggle="modal" data-target="#modalAsignarEquipo">
-              Registrar equipos
+              Registrar Producto
             </button>
             <hr>
             <div id="tablaAsignacionesLoad"></div>

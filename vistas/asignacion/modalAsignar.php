@@ -5,7 +5,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Registrar Equipo</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Registrar Producto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -28,7 +28,7 @@
 
                             ?>
                             <select name="idPersona" id="idPersona" class="form-control form-select" required>
-                                <option value="">Seleccione una opción</option>
+                                <option value="">Seleccione un nombre</option>
                                 <?php while ($mostrar = mysqli_fetch_array($respuesta)) { ?>
                                     <option value="<?php echo $mostrar['id_persona']; ?>"><?php echo $mostrar['nombre']; ?></option>
                                 <?php } ?>
@@ -36,13 +36,13 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <label>Tipo de equipo</label>
+                            <label>Producto</label>
                             <?php
                             $sql = "SELECT id_equipo, nombre FROM t_cat_equipo ORDER BY nombre";
                             $respuesta = mysqli_query($link, $sql);
                             ?>
                             <select name="idEquipo" id="idEquipo" class="form-control form-select" required>
-                                <option value="">Seleccione una opción</option>
+                                <option value="">Seleccione un producto</option>
                                 <?php while ($mostrar = mysqli_fetch_array($respuesta)) { ?>
                                     <option value="<?php echo $mostrar['id_equipo']; ?>"> <?php echo $mostrar['nombre']; ?></option>
                                 <?php } ?>
@@ -50,7 +50,28 @@
                         </div>
 
                     </div>
+                    <!-- fecha de registro del producto y tiempo de garantia -->
+                    <div class="row">
 
+                        <div class="col-sm-6">
+                            <label for="fechaRegistro">Fecha de Registro</label>
+                            <input type="datetime-local" class="form-control" name="fechaRegistro" id="fechaRegistro" required>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="garantia">Duración de la Garantía</label>
+                            <select name="garantia" id="garantia" class="form-control form-select" required>
+                                <option value="">Seleccione una opción</option>
+                                    <option value="1">1 mes</option>
+                                    <option value="3">3 meses</option>
+                                    <option value="6">6 meses</option>
+                                    <option value="12">12 meses</option>
+                                    <option value="24">24 meses</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!-- fin fecha de registro del producto y tiempo de garantia -->
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="marca">Marca</label>
@@ -92,8 +113,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button class="btn btn-primary">Asignar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary">Registrar</button>
                 </div>
             </div>
         </div>

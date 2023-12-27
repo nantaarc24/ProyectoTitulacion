@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="shortcut icon" href="images/icono.jpeg" style="height: 130px; width: 130px;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soporte Técnico Help-Desk</title>
+    <title>Soporte Técnico Garantía</title>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"> -->
     <style type="text/css">
         body {
@@ -138,20 +138,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <img src="public/img/hdlogo.png" id="icon" alt="User Icon" />
                 <link rel="stylesheet" href="public/bootstrap/bootstrap.min.css">
                 <link rel="stylesheet" href="public/css/login.css">
-                <h1 style="color: #60a0ff; font-family: Poppins, sans-serif; font-size: 40px;">Help-Desk</h1>
+                <h1 style="color: #60a0ff; font-family: Poppins, sans-serif; font-size: 40px;">Compucenter</h1>
             </div>
             <p>Por favor, complete sus credenciales para iniciar sesión.</p>
             <form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> method="post">
                 <div class=" <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                     <label></label>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-                    <input type="text" name="username" placeholder="username" class="fadeIn second" value="<?php echo $username; ?>">
+                    <input type="text" name="username" placeholder="usuario" class="fadeIn second" value="<?php echo $username; ?>">
                     <span class="help-block"><?php echo $username_err; ?></span>
                 </div>
                 <div class=" <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                     <label></label>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-                    <input type="password" name="password" placeholder="password" class="fadeIn third">
+                    <input type="password" name="password" placeholder="contraseña" class="fadeIn third">
                     <span class="help-block"><?php echo $password_err; ?></span>
                 </div>
                 <div class="">
@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Remind Passowrd -->
             <div id="formFooter">
-                <a class="underlineHover" data-toggle="modal" data-target="#modalContacto" href="#">¿No cuenta con credenciales?</a>
+                <!-- <a class="underlineHover" data-toggle="modal" data-target="#modalContacto" href="#">¿No cuenta con credenciales?</a> -->
             </div>
 
         </div>

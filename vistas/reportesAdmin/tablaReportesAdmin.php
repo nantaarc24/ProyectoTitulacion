@@ -17,31 +17,59 @@ $idUsuario = mysqli_fetch_array($respuesta)[0];
 
 //fin obtenemos el id_usuario por medio del usuario($_SESSION["username"])
 
-$sql = "SELECT
-reporte.id_reporte as idReporte,
-reporte.id_usuario as idUsuario,
-concat(persona.paterno,
-        ' ',
-       persona.materno,
-       ' ',
-       persona.nombre) as nombrePersona,
-  equipo.id_equipo as idEquipo,
-  equipo.nombre as nombreEquipo,
-  reporte.descripcion_problema as problema,
-  reporte.estatus as estatus,
-  reporte.solucion_problema as solucion,
-  reporte.fecha as fecha
+$sql = "SELECT DISTINCT
+    reporte.id_reporte as idReporte,
+    reporte.id_usuario as idUsuario,
+    CONCAT(persona.paterno,
+            ' ',
+            persona.materno,
+            ' ',
+            persona.nombre) as nombrePersona,
+    equipo.id_equipo as idEquipo,
+    equipo.nombre as nombreEquipo,
+    asignacion.garantia as garantia,
+    asignacion.fechaRegistro as fechaRegistro,
+    reporte.descripcion_problema as problema,
+    reporte.estatus as estatus,
+    reporte.solucion_problema as solucion,
+    reporte.fecha as fecha,
+    CONCAT(tecnico.apellidos,
+            ' ',
+            tecnico.nombre) as nombreTecnico
 FROM
-t_reportes as reporte
+    t_reportes as reporte
 INNER JOIN
-t_usuarios as usuario ON reporte.id_usuario = usuario.id_usuario
+    t_usuarios as usuario ON reporte.id_usuario = usuario.id_usuario
 INNER JOIN
-t_persona as persona ON usuario.id_persona = persona.id_persona
+    t_persona as persona ON usuario.id_persona = persona.id_persona
 INNER JOIN
-t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo
+    t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo
+LEFT JOIN (
+    SELECT
+        id_equipo,
+        MAX(garantia) as garantia,
+        MAX(fechaRegistro) as fechaRegistro
+    FROM
+        t_asignacion
+    GROUP BY id_equipo
+) as asignacion ON reporte.id_equipo = asignacion.id_equipo
+LEFT JOIN (
+    SELECT
+        id,
+        apellidos,
+        nombre
+    FROM
+        t_tecnico
+) as tecnico ON reporte.id_usuario_tecnico = tecnico.id
 ORDER BY reporte.fecha DESC";
 
+
+
 $respuesta = mysqli_query($link, $sql);
+
+if (!$respuesta) {
+    die('Error en la consulta: ' . mysqli_error($link));
+}
 ?>
 
 <!-- posicion de las dobles flechas de la tabla -->
@@ -59,10 +87,13 @@ $respuesta = mysqli_query($link, $sql);
     <thead>
         <th>#</th>
         <th>Persona</th>
-        <th>Dispositivo</th>
-        <th>Fecha</th>
+        <th>Producto</th>
+        <th>Técnico</th>
+        <th>Garantía</th>
+        <th>Estado</th>
+        <th>Fecha Reg. Prod.</th>
+        <th>Fecha Reg. Falla</th>
         <th>Descripción</th>
-        <th>Estatus</th>
         <th>Solución</th>
         <th>Eliminar</th>
     </thead>
@@ -73,8 +104,13 @@ $respuesta = mysqli_query($link, $sql);
                 <td><?php echo $contador++; ?></td>
                 <td><?php echo $mostrar['nombrePersona']; ?></td>
                 <td><?php echo $mostrar['nombreEquipo']; ?></td>
-                <td><?php echo $mostrar['fecha']; ?></td>
-                <td><?php echo $mostrar['problema']; ?></td>
+                <td><?php echo $mostrar['nombreTecnico']; ?></td>
+                <td>
+                    <?php
+                    $garantia = $mostrar['garantia'];
+                    echo $garantia . ($garantia == 1 ? ' mes' : ' meses');
+                    ?>
+                </td>
                 <td>
                     <?php
                     $estatus = $mostrar['estatus'];
@@ -85,10 +121,19 @@ $respuesta = mysqli_query($link, $sql);
                     echo $cadenaEstatus;
                     ?>
                 </td>
+                <td><?php echo $mostrar['fechaRegistro']; ?></td>
+                <td><?php echo $mostrar['fecha']; ?></td>
+                <td><?php echo $mostrar['problema']; ?></td>
                 <td>
-                    <button class="btn btn-info btn-sm" onclick="obtenerDatosSolucion('<?php echo $mostrar['idReporte']; ?>')" data-bs-toggle="modal" data-bs-target="#modalAgregarSolucionReporte" style="color: white;">
+                    <?php if ($estatus != 0) { 
+                    ?>
+                        <button class="btn btn-info btn-sm" onclick="obtenerDatosSolucion('<?php echo $mostrar['idReporte']; ?>')" data-bs-toggle="modal" data-bs-target="#modalAgregarSolucionReporte" style="color: white;">
+                            Solución
+                        </button>
+                    <?php } ?>
+                    <!-- <button class="btn btn-info btn-sm" onclick="obtenerDatosSolucion('<?php echo $mostrar['idReporte']; ?>')" data-bs-toggle="modal" data-bs-target="#modalAgregarSolucionReporte" style="color: white;">
                         Solución
-                    </button>
+                    </button> -->
                     <?php echo $mostrar['solucion']; ?>
                 </td>
                 <td>
@@ -114,16 +159,17 @@ $respuesta = mysqli_query($link, $sql);
             //     'copy', 'csv', 'excel', 'pdf'
             // ],
             buttons: {
-                buttons: [{
-                        extend: 'copy',
-                        className: 'btn btn-outline-info',
-                        text: '<i class="far fa-copy"></i> Copiar'
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn btn-outline-primary',
-                        text: '<i class="fas fa-file-csv"></i> CSV'
-                    },
+                buttons: [
+                    // {
+                    //     extend: 'copy',
+                    //     className: 'btn btn-outline-info',
+                    //     text: '<i class="far fa-copy"></i> Copiar'
+                    // },
+                    // {
+                    //     extend: 'csv',
+                    //     className: 'btn btn-outline-primary',
+                    //     text: '<i class="fas fa-file-csv"></i> CSV'
+                    // },
                     {
                         extend: 'excel',
                         className: 'btn btn-outline-success',

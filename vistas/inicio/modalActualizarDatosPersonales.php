@@ -30,7 +30,7 @@
         <input class="form-control" type="date" name="fechaNacInicio" id="fechaNacInicio">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button class="btn btn-warning" style="color: white;">Actualizar</button>
       </div>
     </div>

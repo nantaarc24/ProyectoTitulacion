@@ -9,19 +9,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sql= "INSERT INTO t_asignacion(id_persona,
                                                 id_equipo,
                                                 marca,
+                                                garantia,
+                                                fechaRegistro,
                                                 modelo,
                                                 color,
                                                 descripcion,
                                                 memoria,
                                                 disco_duro,
                                                 procesador)
-                        VALUES (?,?,?,?,?,?,?,?,?)";
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?)";
                 $enlace = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
                 $query= $enlace->prepare($sql);
-                $query->bind_param("iisssssss", $datos["idPersona"],
+                $query->bind_param("iisisssssss", $datos["idPersona"],
                                                 $datos["idEquipo"],
                                                 $datos["marca"],
+                                                $datos["garantia"],
+                                                $datos["fechaRegistro"],
                                                 $datos["modelo"],
                                                 $datos["color"],
                                                 $datos["descripcion"],

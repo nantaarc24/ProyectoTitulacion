@@ -4,14 +4,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Reportar al equipo Help-Desk</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Reportar la Falla del Producto</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
         <div class="modal-body">
-          <label for="idEquipo">Mis dispositivos</label>
+          <label for="idEquipo">Mis Productos</label>
           <?php
 
           $Usuario = $_SESSION["username"];
@@ -46,21 +46,38 @@
                                                     id_usuario = '$idUsuario')";
           
           $respuesta= mysqli_query($link, $sql);
+
+          //Mostrar los técnicos
+          $sql2 = "SELECT
+                    tecnico.id as idTecnico,                       
+                    CONCAT(tecnico.nombre,' ',tecnico.apellidos) as nombreTecnico
+                    FROM
+                    t_tecnico AS tecnico";
+
+            $respuesta2= mysqli_query($link, $sql2);
           ?>
 
           <select name="idEquipo" id="idEquipo" class="form-control form-select">
-            <option value="">Selecciona un dispositivo</option>
+            <option value="">Seleccione un producto</option>
             <?php while($mostrar = mysqli_fetch_array($respuesta)){ ?>
               <option value="<?php echo $mostrar['idEquipo']; ?>"> <?php echo $mostrar['nombreEquipo']; ?> </option>
             <?php } ?>
           </select>
-
-          <label for="problema">Describe tu problema</label>
+          <br>
+          <label for="idTecnico">Asignar Técnico</label>
+          <select name="idTecnico" id="idTecnico" class="form-control form-select">
+            <option value="">Selecciona un Técnico</option>
+            <?php while($mostrar = mysqli_fetch_array($respuesta2)){ ?>
+              <option value="<?php echo $mostrar['idTecnico']; ?>"> <?php echo $mostrar['nombreTecnico']; ?> </option>
+            <?php } ?>
+          </select>
+          <br>
+          <label for="problema">Describe la falla del producto</label>
           <textarea name="problema" id="problema" class="form-control"></textarea>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button class="btn btn-primary">Crear</button>
         </div>
       </div>

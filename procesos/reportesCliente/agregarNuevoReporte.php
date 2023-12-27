@@ -19,6 +19,7 @@ $idUsuario = mysqli_fetch_array($respuesta)[0];
 $datos = array(
     'idUsuario' => $idUsuario,
     'idEquipo'=> $_POST['idEquipo'],
+    'idTecnico'=> $_POST['idTecnico'],
     'problema'=> $_POST['problema']
     
 );

@@ -5,12 +5,13 @@ include 'config.php';
 function agregarReporteCliente($datos){
     $enlace = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
-    $sql= "INSERT INTO t_reportes (id_usuario, id_equipo,descripcion_problema) VALUES (?,?,?)";
+    $sql= "INSERT INTO t_reportes (id_usuario, id_equipo,id_usuario_tecnico,descripcion_problema) VALUES (?,?,?,?)";
 
     
     $query= $enlace->prepare($sql);
-    $query->bind_param('iis', $datos['idUsuario'],
+    $query->bind_param('iiis', $datos['idUsuario'],
                               $datos['idEquipo'],
+                              $datos['idTecnico'],
                               $datos['problema']);
     $respuesta=$query->execute();
     // $query->close();
@@ -55,13 +56,13 @@ function obtenerSolucion($idReporte){
 
 function actualizarSolucion($datos){
     $sql="UPDATE t_reportes
-          SET id_usuario_tecnico= ?,
+          SET 
               solucion_problema= ?,
               estatus= ?
           WHERE id_reporte= ?";
     $enlace = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $query= $enlace->prepare($sql);
-    $query->bind_param('isii', $datos['idUsuario'],
+    $query->bind_param('sii', 
                                $datos['solucion'],
                                $datos['estatus'],
                                $datos['idReporte']);

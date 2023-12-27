@@ -5,6 +5,8 @@
 $datos = array(
     "idPersona" => $_POST['idPersona'],
     "idEquipo" => $_POST['idEquipo'],
+    "fechaRegistro" => $_POST['fechaRegistro'],
+    "garantia" => $_POST['garantia'],
     "marca" => $_POST['marca'],
     "modelo" => $_POST['modelo'],
     "color" => $_POST['color'],
