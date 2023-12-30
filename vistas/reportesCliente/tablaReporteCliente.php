@@ -18,34 +18,34 @@ $idUsuario = mysqli_fetch_array($respuesta)[0];
 //fin obtenemos el id_usuario por medio del usuario($_SESSION["username"])
 
 $sql = "SELECT
-reporte.id_reporte as idReporte,
-reporte.id_usuario as idUsuario,
-concat(persona.paterno,
-        ' ',
-       persona.materno,
-       ' ',
-       persona.nombre) as nombrePersona,
-  equipo.id_equipo as idEquipo,
-  equipo.nombre as nombreEquipo,
-  concat(tecnico.apellidos,' ',tecnico.nombre) as nombreTecnico,
-  reporte.descripcion_problema as problema,
-  reporte.estatus as estatus,
-  reporte.solucion_problema as solucion,
-  reporte.fecha as fecha,
-  asignacion.garantia as garantia
+r.id_reporte AS idReporte,
+r.id_usuario AS idUsuario,
+CONCAT(p.paterno, ' ', p.materno, ' ', p.nombre) AS nombrePersona,
+e.id_equipo AS idEquipo,
+e.nombre AS nombreEquipo,
+CONCAT(t.apellidos, ' ', t.nombre) AS nombreTecnico,
+r.descripcion_problema AS problema,
+r.estatus,
+r.solucion_problema AS solucion,
+a.fechaRegistro as fechaRegistro,
+r.fecha,
+a.garantia
 FROM
-t_reportes as reporte
-INNER JOIN
-t_usuarios as usuario ON reporte.id_usuario = usuario.id_usuario
-INNER JOIN
-t_persona as persona ON usuario.id_persona = persona.id_persona
-INNER JOIN
-t_cat_equipo AS equipo ON reporte.id_equipo = equipo.id_equipo
-INNER JOIN
-t_tecnico AS tecnico ON reporte.id_usuario_tecnico = tecnico.id
-INNER JOIN
-t_asignacion as asignacion ON reporte.id_equipo = asignacion.id_equipo
-AND reporte.id_usuario = '$idUsuario'";
+t_reportes r
+JOIN
+t_usuarios u ON r.id_usuario = u.id_usuario
+JOIN
+t_persona p ON u.id_persona = p.id_persona
+JOIN
+t_cat_equipo e ON r.id_equipo = e.id_equipo
+JOIN
+t_tecnico t ON r.id_usuario_tecnico = t.id
+LEFT JOIN
+t_asignacion a ON r.id_equipo = a.id_equipo AND u.id_persona = a.id_persona
+WHERE
+r.id_usuario = '$idUsuario'
+GROUP BY
+r.id_reporte";
 
 $respuesta = mysqli_query($link, $sql);
 ?>
@@ -60,6 +60,13 @@ $respuesta = mysqli_query($link, $sql);
     }
 </style>
 
+<script>
+    function redirectToTicketPage(idReporte) {
+        // Redirige a ticket.php
+        window.location.href = '../ticketpdf.php?idReporte='+idReporte;
+    }
+</script>
+
 <table class="table table-sm dt-responsive nowrap table-bordered" style="width: 100%;" id="tablaReportesClienteDataTable">
 
     <thead>
@@ -68,11 +75,13 @@ $respuesta = mysqli_query($link, $sql);
         <th>Dispositivo</th>
         <th>Técnico</th>
         <th>Garantía</th>
-        <th>Fecha</th>
+        <th>Fecha Reg. Producto</th>
+        <th>Fecha Reg. Falla</th>
         <th>Descripción</th>
         <th>Estado</th>
         <th>Solución</th>
         <th>Eliminar</th>
+        <th>QR</th>
     </thead>
     <tbody>
         <?php $contador = 1; ?>
@@ -88,6 +97,7 @@ $respuesta = mysqli_query($link, $sql);
                     echo $garantia . ($garantia == 1 ? ' mes' : ' meses');
                     ?>
                 </td>
+                <td><?php echo $mostrar['fechaRegistro']; ?></td>
                 <td><?php echo $mostrar['fecha']; ?></td>
                 <td><?php echo $mostrar['problema']; ?></td>
                 <td>
@@ -105,6 +115,14 @@ $respuesta = mysqli_query($link, $sql);
                     <?php if ($mostrar['solucion'] == "") { ?>
                         <button class="btn btn-danger btn-sm" onclick="eliminarReporteCliente(<?php echo $mostrar['idReporte']; ?>)">
                             Eliminar
+                        </button>
+                    <?php } ?>
+                </td>
+                <td>
+                    <?php if ($mostrar['solucion'] == "") { ?>
+                        <!-- <button class="btn btn-primary btn-sm" onclick="generarQR(<?php echo $mostrar['idReporte']; ?>)"> -->
+                        <button class="btn btn-primary btn-sm" onclick="redirectToTicketPage(<?php echo $mostrar['idReporte']; ?>)">
+                            Generar QR
                         </button>
                     <?php } ?>
                 </td>
@@ -155,4 +173,24 @@ $respuesta = mysqli_query($link, $sql);
             }
         });
     });
+
+    // funcion para generar el QR
+    function generarQR(idReporte) {
+        // Puedes ajustar la URL según tu estructura de archivos y nombre de archivo PDF
+        var pdfUrl = '../../ticketpdf/' + idReporte + '.pdf';
+
+        // Llama a una función PHP que genera el código QR
+        $.ajax({
+            type: "POST",
+            url: "generar_qr.php", // Crea un archivo PHP separado para generar el código QR
+            data: {
+                pdfUrl: pdfUrl
+            },
+            success: function(qrCode) {
+                // Abre una nueva ventana o modal con el código QR
+                // Puedes usar una biblioteca de modales como Bootstrap Modal
+                alert('Código QR generado: ' + qrCode);
+            }
+        });
+    }
 </script>

@@ -77,12 +77,12 @@
                         </div>
                     </div>
                     <!-- fila 5 -->
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-12">
                             <label for="ubicacion">Ubicación</label>
                             <textarea class="form-control" name="ubicacion" id="ubicacion" cols="30" rows="10" required></textarea>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <span class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</span>

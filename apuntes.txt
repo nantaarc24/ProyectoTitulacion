@@ -1,1 +1,1 @@
--una boleta para la atencion del cliente, con codigo(el ultimo registro)
+ocultar campo "ubicacion" de Agregar nuevo usuario interfaz empleado

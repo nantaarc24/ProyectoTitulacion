@@ -4,7 +4,6 @@ $sql = "SELECT usuarios.id_usuario as idUsuario,
                 usuarios.usuario as nombreUsuario, 
                 roles.nombre as rol, 
                 usuarios.id_rol as idRol, 
-                usuarios.ubicacion as ubicacion, 
                 usuarios.activo as estatus, 
                 usuarios.id_persona as idPersona, 
                 persona.nombre as nombrePersona, 
@@ -40,7 +39,7 @@ $respuesta = mysqli_query($link, $sql);
         <th>Teléfono</th>
         <th>Correo</th>
         <th>Usuario</th>
-        <th>Ubicación</th>
+        <!-- <th>Ubicación</th> -->
         <th>Sexo</th>
         <th>Cambiar Clave</th>
         <th>Activar</th>
@@ -60,7 +59,6 @@ $respuesta = mysqli_query($link, $sql);
                 <td><?php echo $mostrar['telefono']; ?></td>
                 <td><?php echo $mostrar['correo']; ?></td>
                 <td><?php echo $mostrar['nombreUsuario']; ?></td>
-                <td><?php echo $mostrar['ubicacion']; ?></td>
                 <td><?php echo $mostrar['sexo']; ?></td>
                 <td>
                     <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalResetPassword" onclick="agregarIdUsuarioReset(<?php echo $mostrar['idUsuario'] ?>)">
